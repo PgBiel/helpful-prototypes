@@ -1,0 +1,24 @@
+{
+  "name": "helpful-prototypes",
+  "version": "1.0.0",
+  "description": "Prototypes that can help ya.",
+  "main": "proto.js",
+  "scripts": {
+    "test": "echo ????"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PgSuper/helpful-prototypes.git"
+  },
+  "keywords": [
+    "prototypes",
+    "helpful"
+  ],
+  "author": "PgSuper",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PgSuper/helpful-prototypes/issues"
+  },
+  "homepage": "https://github.com/PgSuper/helpful-prototypes#readme",
+  "dependencies": {}
+}
