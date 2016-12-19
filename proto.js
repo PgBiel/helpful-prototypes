@@ -108,6 +108,16 @@ function load(list = "all"){
 	    		};
 	    	}
 	    });
+	    Object.defineProperty(Array.prototype, "lastIndex", {
+		get() {
+		    return this.length - 1;
+		}
+	    });
+	    Array.prototype.tackOn = function(index, val) {
+		var unlinked = this.concat([]);
+		unlinked[index] += val;
+		return unlinked;
+	    };
 	};
 	let loadstring = function(){
 		Object.defineProperty(String.prototype, "toJSON", {
@@ -130,6 +140,179 @@ function load(list = "all"){
 	            return function(){return Number(this);};
 	        }
 	    });
+	    String.prototype.getPage = function(pageNumber, count, regex, joinChar = ",") {
+		var matched = this.match(regex);
+		return matched.splice(--pageNumber * count, count).join(joinChar);
+	    };
+	};
+	let loadnumber = function(){
+		Object.defineProperty(Number.prototype, "toPow", {
+			get: function() {
+				return function(pow){return Math.pow(this, pow);};
+			}
+		});
+	};
+	let temporarytestprop = function(arr, tested) {
+		let check = false;
+		for (let prop of arr) {
+			if (typeof prop == "string" && typeof tested == "string") {
+				let testerstuff = new RegExp(`^${prop}$`, "i");
+				if (testerstuff.test(tested)) {
+					check = true;
+					break;
+				}
+			} else {
+				if (prop === tested) {
+					check = true;
+					break;
+				}
+			}
+function load(list = "all"){
+	if (typeof list !== "string" && !(list instanceof Array)) throw new Error("Load list must be either an array of valid types or a string indicating which.\nValid: String, Array, Object, Number. Also write all as string to load all.");
+	let loadobject = function(){
+		Object.defineProperty(Object.prototype, "copyme", {
+	        value: function() {
+	            var obj = {};
+	            for(let i in this) {
+	                obj[i] = this[i];
+	            }
+	            return obj;
+	        }
+	    });
+	    Object.defineProperty(Object.prototype, "keysize", {
+	    get: function() {
+	            return Object.keys(this).length;
+	        }
+	    });
+	    Object.defineProperty(Object.prototype, "map", {
+	        value: function(func) {
+	            var self = this.copyme();
+	            for (let i in self) {
+	                self[i] = func(self[i], i, self);
+	            }
+	            return self;
+	        }
+	    });
+	};
+	let loadarray = function(){
+		Object.defineProperty(Array.prototype, "last", {
+	        get: function() {
+	            return this[this.length - 1];
+	        },
+	        set: function(val) {
+	            this[this.length - 1] = val;
+	        }
+	    });
+	    Object.defineProperty(Array.prototype, "first", {
+	        get: function() {
+	            return this[0];
+	        },
+	        set: function(val) {
+	            this[0] = val;
+	        }
+	    });
+	    Object.defineProperty(Array.prototype, "random", {
+	        get: function() {
+	            return this[Math.floor(Math.random() * this.length)];
+	        },
+	        set: function(val) {
+	            this[Math.floor(Math.random() * this.length)] = val;
+	        }
+	    });
+	    Object.defineProperty(Array.prototype, "sum", {
+	        get: function() {
+	            return this.reduce((a,b) => a + b);
+	        }
+	    });
+	    Object.defineProperty(Array.prototype, "mean", {
+	        get: function() {
+	            return this.sum / this.length;
+	        }
+	    });
+	    Object.defineProperty(Array.prototype, "cleaned", {
+	    	get: function() {
+	    		let newarr = [];
+	    		for (let prop of this) {
+	    			if (prop !== undefined)
+	    				newarr.push(prop);
+	    		}
+	    		return newarr;
+	    	}
+	    });
+	    Object.defineProperty(Array.prototype, "cleanme", {
+	    	value: function() {
+	    		let newarr = [];
+	    		for (let prop of this) {
+	    			if (prop !== undefined)
+	    				newarr.push(prop);
+	    		}
+	    		for (let forgetthis of this) {
+	    			this.pop();
+	    		}
+	    		for (let key in newarr) {
+	    			this[key] = newarr[key];
+	    		}
+	    		return this;
+	    	}
+	    });
+	    Object.defineProperty(Array.prototype, "testprop", {
+	    	get: function() {
+	    		return function(tested) {
+	    			let check = false;
+	    			for (let prop of this) {
+	    				if (typeof prop == "string" && typeof tested == "string") {
+	    					let testerstuff = new RegExp(`^${prop}$`, "i");
+	    					if (testerstuff.test(tested)) {
+	    						check = true;
+	    						break;
+	    					}
+	    				} else {
+	    					if (prop === tested) {
+	    						check = true;
+	    						break;
+	    					}
+	    				}
+	    			}
+	    			return check;
+	    		};
+	    	}
+	    });
+		Object.defineProperty(Array.prototype, "lastIndex", {
+			get() {
+				return this.length - 1;
+			}
+		});
+		Array.prototype.tackOn = function(index, val) {
+			var unlinked = this.concat([]);
+			unlinked[index] += val;
+			return unlinked;
+		};
+	};
+	let loadstring = function(){
+		Object.defineProperty(String.prototype, "toJSON", {
+	        get: function() {
+	            return function(){return JSON.parse(this);};
+	        }
+	    });
+	    Object.defineProperty(String.prototype, "URI", {
+	        get: function() {
+	            return encodeURI(this);
+	        }
+	    });
+	    Object.defineProperty(String.prototype, "nonURI", {
+	        get: function() {
+	            return decodeURI(this);
+	        }
+	    });
+	    Object.defineProperty(String.prototype, "toNumber", {
+	        get: function() {
+	            return function(){return Number(this);};
+	        }
+	    });
+	    String.prototype.getPage = function(pageNumber, count, regex, joinChar = ",") {
+		    var matched = this.match(regex);
+		    return matched.splice(--pageNumber * count, count).join(joinChar);
+		};
 	};
 	let loadnumber = function(){
 		Object.defineProperty(Number.prototype, "toPow", {
