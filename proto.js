@@ -128,6 +128,19 @@ function load(list = "all"){
 				}
 			});
 			newarr.map((prop, index)=>this[index]=prop);
+			return newarr;
+		};
+		Array.prototype.pullback = function() {
+			let newarr = [];
+			this.map((prop, index)=>{
+				if (index === this.lastIndex) {
+					newarr.push(this[0]);
+				} else {
+					newarr.push(this[index+1]);
+				}
+			});
+			newarr.map((prop, index)=>this[index]=prop);
+			return newarr;
 		};
 	};
 	let loadstring = function(){
