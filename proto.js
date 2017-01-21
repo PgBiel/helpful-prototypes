@@ -92,7 +92,7 @@ function load(list = "all"){
 	    			let check = false;
 	    			for (let prop of this) {
 	    				if (typeof prop == "string" && typeof tested == "string") {
-	    					let testerstuff = new RegExp(`^${prop}$`, "i");
+	    					let testerstuff = new RegExp(`^${prop.replace(/[-.\\\[\]|^$()?+*{}]/g,m=>"\\"+m)}$`, "i");
 	    					if (testerstuff.test(tested)) {
 	    						check = true;
 	    						break;
