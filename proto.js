@@ -113,12 +113,14 @@ function load(list = "all"){
 				return this.length - 1;
 			}
 		});
-		Array.prototype.tackOn = function(index, val) {
+		Object.defineProperty(Array.prototype, "tackOn", {
+			value: function(index, val) {
 			var unlinked = this.concat([]);
 			unlinked[index] += val;
 			return unlinked;
-		};
-		Array.prototype.pullfow = function() {
+			}
+		});
+		Object.defineProperty(Array.prototype, "pullfow",  {value: function() {
 			let newarr = [];
 			this.map((prop, index)=>{
 				if (index === 0) {
@@ -129,8 +131,8 @@ function load(list = "all"){
 			});
 			newarr.map((prop, index)=>this[index]=prop);
 			return newarr;
-		};
-		Array.prototype.pullback = function() {
+		}});
+		Object.defineProperty(Array.prototype, "pullback", {value: function() {
 			let newarr = [];
 			this.map((prop, index)=>{
 				if (index === this.lastIndex) {
@@ -141,7 +143,7 @@ function load(list = "all"){
 			});
 			newarr.map((prop, index)=>this[index]=prop);
 			return newarr;
-		};
+		}});
 	};
 	let loadstring = function(){
 		Object.defineProperty(String.prototype, "toJSON", {
@@ -164,10 +166,10 @@ function load(list = "all"){
 	            return function(){return Number(this);};
 	        }
 	    });
-	    String.prototype.getPage = function(pageNumber, count, regex, joinChar = ",") {
+	    Object.defineProperty(String.prototype, "getPage", {value: function(pageNumber, count, regex, joinChar = ",") {
 		    var matched = this.match(regex);
 		    return matched.splice(--pageNumber * count, count).join(joinChar);
-		};
+		}});
 	};
 	let loadnumber = function(){
 		Object.defineProperty(Number.prototype, "toPow", {
