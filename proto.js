@@ -113,13 +113,11 @@ function load(list = "all"){
 				return this.length - 1;
 			}
 		});
-		Object.defineProperty(Array.prototype, "tackOn", {
-			value: function(index, val) {
+		/*Array.prototype.tackOn = function(index, val) {
 			var unlinked = this.concat([]);
 			unlinked[index] += val;
 			return unlinked;
-			}
-		});
+		};*/
 		Object.defineProperty(Array.prototype, "pullfow",  {value: function() {
 			let newarr = [];
 			this.map((prop, index)=>{
